@@ -76,6 +76,18 @@ function animate() {
   revolvingSphere.position.x = params.radius * Math.cos(angle);
   revolvingSphere.position.z = params.radius * Math.sin(angle);
 
+  // Update the orbit line trajectory if the radius changes
+  orbitGeometry.setFromPoints(
+    orbitPoints.map((point, i) => {
+      const theta = (i / numSegments) * Math.PI * 2;
+      return new THREE.Vector3(
+        params.radius * Math.cos(theta),
+        0,
+        params.radius * Math.sin(theta)
+      );
+    })
+  );
+
   // Update camera controls
   if (isFollowingRevolvingSphere && trackballControls) {
     const offset = 2;
